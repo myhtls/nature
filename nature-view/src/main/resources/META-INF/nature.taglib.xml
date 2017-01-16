@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib
+ xmlns="http://java.sun.com/xml/ns/javaee" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    version="2.0" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+    http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"> 
+	<namespace>http://nature.com/faces</namespace>
+	
+	<tag>
+        <tag-name>restriction</tag-name>
+        <handler-class>
+            org.nature.view.component.restriction.RestrictionTagHandler
+        </handler-class>
+        <attribute>
+            <description>引用查询列表或LazyDataModel Impl实例.</description>
+            <name>addTo</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>在查询条件中使用的属性.</description>
+            <name>property</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>查询条件中的查询类型. 类型有 "eq", "ne", "gt", "lt", "gte", "lte", "like", "notlike", "in", "notin", "null", "notnull", "empty", "notempty", "memberof" and "notmemberof". 默认值 "eq". </description>
+            <name>type</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>定义如果使用like的查询将被转换为 "ilike"</description>
+            <name>ilike</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
+            <description>like类型. 类型为: "both", "begin", "end".默认值: "both".</description>
+            <name>likeType</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>在日期操作中使用JPA中的 javax.persistence.TemporalType  . 类型为 "time", "timestamp" and "date". 默认值: null. </description>
+            <name>temporalType</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>定义一个别名</description>
+            <name>castAs</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+	
+	<tag>
+		<tag-name>restrictionCollector</tag-name>
+		<handler-class>
+			org.nature.view.component.restriction.RestrictionCollectorTagHandler
+		</handler-class>
+		<attribute>
+            <description>引用查询列表或LazyDataModel Impl实例.</description>
+            <name>addTo</name>
+            <required>false</required>
+            <type>java.lang.Object</type>
+        </attribute>
+        <attribute>
+            <description>Debug restrictions 和 LazyDataModel 应用程序日志.有用于开发.默认值 "false"</description>
+            <name>debug</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+	</tag>
+
+
+
+</facelet-taglib>
