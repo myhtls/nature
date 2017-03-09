@@ -18,6 +18,7 @@ import java.beans.PropertyDescriptor;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
+import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -93,6 +94,45 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 		}
 		return null;
 	}
+	
+	/**
+	 * @param idValue
+	 * @param lockModeType 琐类型
+	 * lockModeType.OPTIMISTIC:乐观读取琐定(可重读(Repeatable Read)),其防止所谓不可重复读取的异常.当同在一事务中对相同的数据事务
+	 * 查询两次时，与第一次返回的数据相比，第二次查询将返回数据的不同版本，因为另一个事务在中间时间内修改了它。换言之,可重复读隔离级别意味着
+	 * 一旦一个事务访问数据，且另一个事务修改了数据，就必须阻止至少一个事务的提交.
+	 * 
+	 * lockModeType.OPTIMISTIC_FORCE_INCREMENT:乐观写入琐(optimistic write lock),
+	 */
+	@Override
+	public T find(ID idValue,LockModeType lockModeType){
+		
+		if (idValue != null) {
+			// 以主键查询实体对象，this.entityObj是实体的类，id是主键值，如以下的代码查询this.entityObj实体：
+			return this.entityManager.find(this.entityClass, idValue,lockModeType);
+		}
+		return null;
+	}
+	
+	@Override
+	public T find(ID idValue,Map<String, Object> properties) {
+		if (idValue != null) {
+			// 以主键查询实体对象，this.entityObj是实体的类，id是主键值，如以下的代码查询this.entityObj实体：
+			return this.entityManager.find(this.entityClass, idValue,properties);
+		}
+		return null;
+	}
+	
+	@Override
+	public T find(ID idValue,LockModeType lockModeType,Map<String, Object> properties){
+		
+		if (idValue != null) {
+			// 以主键查询实体对象，this.entityObj是实体的类，id是主键值，如以下的代码查询this.entityObj实体：
+			return this.entityManager.find(this.entityClass, idValue,lockModeType,properties);
+		}
+		return null;
+	}
+	
 
 	/**
 	 * 查询所有数据,并返回list的object对象
@@ -115,21 +155,18 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	 */
 	@Override
 	public List<T> findList(ID[] ids) {
-		List<T> _list = new ArrayList<T>();
-		if (ids != null)
-			for (ID id : ids) {
-				T obj = find(id);
-				if (obj != null) {
-					_list.add(obj);
-				}
-			}
-		return _list;
+		StringBuilder sb = new StringBuilder("select u from ")
+				.append(entityClass.getName()).append(" u where u.id ").append(" exists(")
+				.append(ids).append(")");
+		return entityManager.createQuery(sb.toString(),entityClass).getResultList();
+		
 	}
 
-	// ----2.以下是实现命名查询环节
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public T findByColName(String colName, Object value) {
+		
 		String jpql = "SELECT u FROM " + this.entityClass.getName() + " u WHERE u." + colName + " = ?1";
 		Query query = this.entityManager.createQuery(jpql);
 		query.setParameter(1, value);// 给编号为1的参数设值
@@ -142,6 +179,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 
 	}
 
+	// ----2.以下是实现命名查询环节
 	/**
 	 * 
 	 * @param named
@@ -153,7 +191,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	@Override
 	public List<T> findListByNameQuery(String named, Map<String, Object> paramMap) {
 
-		TypedQuery<T> typeQuery = this.entityManager.createNamedQuery(named, this.entityClass);
+		TypedQuery<T> typeQuery = this.entityManager.createNamedQuery(named,entityClass);
 		paramMap.keySet().stream().forEach((key) -> {
 			typeQuery.setParameter(key, paramMap.get(key));
 		});
@@ -498,6 +536,19 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 		return new QueryBuilder(entityManager);
 	}
 	
+	/**
+	 * 琐
+	 */
+	@Override
+	public void lock(LockModeType locketModeType){
+		entityManager.lock(entityClass, locketModeType);
+	}
 	
+	@Override
+	public Long countByNamed(String jpql,String param,Object value){
+		TypedQuery<Long> typeQuery = entityManager.createNamedQuery(jpql, Long.class);
+		typeQuery.setParameter(param, value);
+		return typeQuery.getResultList().get(0);
+	}
 
 }

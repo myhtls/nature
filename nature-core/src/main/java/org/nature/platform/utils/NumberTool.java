@@ -19,44 +19,33 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public class NumberTool {
 
+	private NumberTool() {
+	}
+
 	public static String convertToMoney(BigDecimal valor) {
-
 		NumberFormat nf = NumberFormat.getCurrencyInstance(I18N.getLocale());
-		String retorno = nf.format(valor);
-
-		return retorno;
+		return nf.format(valor);
 	}
 
 	public static String convertToNumber(BigDecimal valor) {
-
 		NumberFormat numberFormat = getNumberFormat();
-		String retorno = numberFormat.format(valor);
+		return numberFormat.format(valor);
 
-		return retorno;
 	}
 
 	public static String convertToMoney(Double valor) {
-
 		NumberFormat nf = NumberFormat.getCurrencyInstance(I18N.getLocale());
-		String retorno = nf.format(valor);
-
-		return retorno;
+		return nf.format(valor);
 	}
 
 	public static String convertToNumber(Double valor) {
-
 		NumberFormat numberFormat = getNumberFormat();
-		String retorno = numberFormat.format(valor);
-
-		return retorno;
+		return numberFormat.format(valor);
 	}
 
 	public static String convertToNumber(String valor) {
-
 		NumberFormat numberFormat = getNumberFormat();
-		String retorno = numberFormat.format(new BigDecimal(valor));
-
-		return retorno;
+		return numberFormat.format(new BigDecimal(valor));
 	}
 
 	public static NumberFormat getNumberFormat() {
@@ -64,11 +53,9 @@ public class NumberTool {
 	}
 
 	public static NumberFormat getNumberFormat(int maximumFractionDigits, int minimumFractionDigits) {
-
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(I18N.getLocale());
 		numberFormat.setMaximumFractionDigits(maximumFractionDigits);
 		numberFormat.setMinimumFractionDigits(minimumFractionDigits);
-
 		return numberFormat;
 	}
 

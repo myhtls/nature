@@ -7,6 +7,8 @@ import org.apache.commons.lang.StringUtils;
  * Created by myhtls on 16/7/2.
  */
 public class MoneyTool {
+	
+	private MoneyTool(){}
 
     /**
      * 大写数字

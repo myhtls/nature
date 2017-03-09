@@ -16,7 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
  * @author hutianlong
  *
  */
-public class DateTool {
+public final class DateTool {
 
 	private DateTool() {}
 	
@@ -298,6 +298,15 @@ public class DateTool {
 	 */
 	public static Date now() {
 		return createDateTime().toDate();
+	}
+	
+	/**
+	 * 当前时间格式化
+	 * @param format
+	 * @return
+	 */
+	public static Date now(String format){
+		return convertDate(nowStr(now(), format));
 	}
 
 	/**

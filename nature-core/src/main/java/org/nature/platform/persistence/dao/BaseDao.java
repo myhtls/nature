@@ -3,6 +3,9 @@ package org.nature.platform.persistence.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.FlushModeType;
+import javax.persistence.LockModeType;
+
 import org.nature.platform.persistence.query.jpql.QueryBuilder;
 
 /**
@@ -36,6 +39,31 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		 * 
 		 */
 		public T find(ID idValue);
+		
+		/**
+		 * 根据主键ID值查找到受控的实体 
+		 * @param idValue
+		 * @param lockModeType 琐类型
+		 * @return
+		 */
+		public T find(ID idValue,LockModeType lockModeType);
+		
+		/**
+		 * 
+		 * @param idValue
+		 * @param properties 标准和供应商特定的属性和提示
+		 * @return
+		 */
+		public T find(ID idValue,Map<String, Object> properties);
+		
+		/**
+		 * 
+		 * @param idValue
+		 * @param lockModeType
+		 * @param properties 标准和供应商特定的属性和提示
+		 * @return
+		 */
+		public T find(ID idValue,LockModeType lockModeType,Map<String, Object> properties);
 
 		/**
 		 * 
@@ -210,6 +238,8 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		
 		public QueryBuilder getQueryBuilder();
 		
+		public void lock(LockModeType locketModeType);
 		
+		public Long countByNamed(String jpql,String param,Object value);
 
 }

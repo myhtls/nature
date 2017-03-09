@@ -12,6 +12,8 @@ public class HumaniseCamelCase {
     private static final String CAMEL_CASE_PATTERN = "([A-Z]|[a-z])[a-z]*";
     private String humanisedString;
     private String acronym;
+    
+    
 
     /**
      * Converts a camelCase to a more human form, with spaces. demo: 'Camel case'

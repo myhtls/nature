@@ -9,6 +9,8 @@ import java.util.Collection;
  */
 public class BeansTool {
 	
+	private BeansTool(){}
+	
 	@SuppressWarnings("rawtypes")
 	public static boolean isEmpty(Object value) {
 

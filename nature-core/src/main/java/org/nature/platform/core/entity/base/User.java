@@ -34,6 +34,9 @@ import org.nature.platform.core.entity.SuperObject;
 public class User extends SuperObject implements Serializable {
 
 	public final static String LOGINSQL = "User.findUserByuserNameAndPassword";
+	/**
+	 * 通过用户名查找user实体类
+	 */
 	public final static String BYUSERNAME = "user.findUserByuserName";
 
 	private static final long serialVersionUID = 1L;
