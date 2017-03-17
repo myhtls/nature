@@ -6,11 +6,16 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.nature.platform.utils.DateTool;
+
 
 /**
  * 实体父类
@@ -33,18 +38,29 @@ public class SuperObject implements Serializable, Cloneable{
 	
 	@Version
 	@Column(name = "version")
-	protected Long version;
+	private Long version;
 	
-	@Column(name = "CREATEDDATE")
+	@Column(name = "createddate")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
-	protected Date createdDate;
+	private Date createdDate;
 	
-	@Column(name = "LASTMODIFIEDDATE")
+	@Column(name = "updateDate")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
-	protected Date updateDate;
+	private Date updateDate;
+	
+	
+	@Column(name = "createUser",length=255)
+	private String createUser;
+	
+	
+	@Column(name = "updateUser",length=255)
+	private String updateUser;
 	
 	@Column(name = "ISDELETE")
-	protected boolean isDelete;
+	private boolean isDelete;
+	
+	@Column(name = "enable",length=1)
+	private int enable;
 	
 	public SuperObject() {
 	}
@@ -108,6 +124,75 @@ public class SuperObject implements Serializable, Cloneable{
 
 	public void setDelete(boolean isDelete) {
 		this.isDelete = isDelete;
+	}
+
+
+
+	public int getEnable() {
+		return enable;
+	}
+
+	public void setEnable(int enable) {
+		this.enable = enable;
+	}
+
+	
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
+	public String getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	@PrePersist
+	private void prePersist() {
+		
+		
+		this.setDelete(false);
+		this.setEnable(1);
+		setCreatedDate(DateTool.now() );
+		
+		
+	}
+	
+	@PreUpdate
+	private void preUpdate(){
+		this.setUpdateDate(DateTool.now());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SuperObject other = (SuperObject) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

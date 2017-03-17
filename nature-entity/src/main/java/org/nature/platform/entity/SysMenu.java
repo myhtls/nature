@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.nature.platform.core.entity.base;
+package org.nature.platform.entity;
 
-import org.nature.platform.core.entity.SuperObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

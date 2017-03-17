@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  * @param <E>
  */
+
 public class BaseService<T,E extends BaseDao<T, ?>> {
 	
 	private E baseDao;
@@ -44,7 +45,6 @@ public class BaseService<T,E extends BaseDao<T, ?>> {
                     }
                 }
             }
-           
           } catch (Exception ex) {
             logger.debug("BaseService:"+ex.getMessage());
         }

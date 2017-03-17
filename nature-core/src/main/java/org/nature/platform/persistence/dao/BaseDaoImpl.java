@@ -42,7 +42,7 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	 */
 	private Class<T> entityClass;
 
-	private @Inject EntityManager entityManager;
+	private @Inject  EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	public BaseDaoImpl() {
