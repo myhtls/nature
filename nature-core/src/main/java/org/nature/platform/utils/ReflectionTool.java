@@ -4,11 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 
-import org.apache.log4j.Logger;
+
 
 public class ReflectionTool {
 	
-	 private static final Logger logger = Logger.getLogger(ReflectionTool.class.getName());
+
 	    /**
 	     * 读取方法的可能前缀
 	     */

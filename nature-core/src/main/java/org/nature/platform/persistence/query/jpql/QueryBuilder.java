@@ -663,7 +663,8 @@ public class QueryBuilder {
      */
     public <T> List<T> getResultList(Class<T> expectedType) {
         type = QueryType.SELECT;
-        List<T> list = this.createQuery().getResultList();
+        @SuppressWarnings("unchecked")
+		List<T> list = this.createQuery().getResultList();
         if (list != null && attributes != null && !attributes.trim().isEmpty() && expectedType != null) {
             return getNormalizedResultList(attributes, list, expectedType);
         }

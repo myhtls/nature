@@ -225,6 +225,32 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	public List<T> findListByNameQuery(String named) {
 		return this.entityManager.createNamedQuery(named, this.entityClass).getResultList();
 	}
+	
+	/**
+	 * 通过命名查询只返回唯一值
+	 */
+	@Override
+	public T uniqueByNameQuery(String named,String paramName,Object value){
+		TypedQuery<T> typeQuery = entityManager.createNamedQuery(named, entityClass);
+		typeQuery.setParameter(paramName, value);
+		typeQuery.setMaxResults(1);
+		List<T> result = typeQuery.getResultList();
+		return result.isEmpty()?null:result.get(0);
+	}
+	
+	/**
+	 * 通过命名查询并且多条件只返回唯一值
+	 */
+	@Override
+	public T uniqueByNameQuery(String named, Map<String, Object> paramMap){
+		TypedQuery<T> typeQuery = this.entityManager.createNamedQuery(named,entityClass);
+		paramMap.keySet().stream().forEach((key) -> {
+			typeQuery.setParameter(key, paramMap.get(key));
+		});
+		typeQuery.setMaxResults(1);
+		List<T> result = typeQuery.getResultList();
+		return result.isEmpty()?null:result.get(0);
+	}
 
 	/**
 	 * 如果你怀疑当前被管理的实体已经不是数据库中最新的数据，你可以通过refresh()方法刷新实体 ，容器会把数据库中的新值重写进实体。

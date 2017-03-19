@@ -122,6 +122,23 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		 * @return List<T>对应的实体集
 		 */
 		public List<T> findListByNameQuery(String named);
+		
+		/**
+		 * 通过命名查询只返回唯一值
+		 * @param named
+		 * @param paramName
+		 * @param value
+		 * @return
+		 */
+		public T uniqueByNameQuery(String named,String paramName,Object value);
+		
+		/**
+		 * 通过命名查询并且多条件只返回唯一值
+		 * @param named
+		 * @param paramMap
+		 * @return
+		 */
+		public T uniqueByNameQuery(String named, Map<String, Object> paramMap);
 
 		/**
 		 * 

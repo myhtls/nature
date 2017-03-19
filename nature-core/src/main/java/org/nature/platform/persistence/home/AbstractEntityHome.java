@@ -13,8 +13,8 @@ import org.nature.platform.persistence.dao.BaseDao;
 
 /**
  * 默认实现部分实体管理器,用于专门编辑页面所使用. 该父类默认的完成了对话相应的启动和结束会话，以及相关的返回操作.
- * 同时支持保存，更新，删除，初始，销毁的方法. 但是继承者仍然需要实现几个方法:getBaseDao(),doLoadEntity(),
- * doInsert(),doUpdate() ,doDelete() 两个可选实现方法:doPreInitData(),doPreDestory()
+ * 同时支持保存，更新，删除，初始，销毁的方法. 但是继承者仍然需要实现几个方法:doLoadEntity(), doInsert(),doUpdate()
+ * ,doDelete() 两个可选实现方法:doPreInitData(),doPreDestory()
  * 
  * @author hutianlong
  *
@@ -29,7 +29,7 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 
 	private @Inject Conversation conversation;
 
-	public abstract BaseDao<T, ID> getBaseDao();
+	protected abstract BaseDao<T, Serializable> getBaseDao();
 
 	/**
 	 * 初始化bean时调用此方法
@@ -97,7 +97,12 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 	 * 
 	 * @return
 	 */
-	protected abstract T doLoadEntity();
+	protected T doLoadEntity() {
+		if (this.isIdSet()) {
+			return getBaseDao().find(key);
+		}
+		return doCreateEntity();
+	}
 
 	/**
 	 * 创建Bean

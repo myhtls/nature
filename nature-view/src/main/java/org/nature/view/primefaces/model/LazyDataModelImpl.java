@@ -66,6 +66,13 @@ public class LazyDataModelImpl<T> extends LazyDataModel {
 		this.defaultOrder = defaultOrder;
 		this.restriction = restriction;
 	}
+	
+	public LazyDataModelImpl(String attributes, String defaultOrder,
+			BaseDao<T, java.io.Serializable> dao) {
+		this.baseDao = dao;
+		this.attributes = attributes;
+		this.defaultOrder = defaultOrder;
+	}
 
 	/**
 	 * @param attributes
@@ -240,7 +247,7 @@ public class LazyDataModelImpl<T> extends LazyDataModel {
 		}
 
 		List<T> dados = queryBuilder.orderBy(orderBy).setFirstResult(first).setMaxResults(pageSize).getResultList();
-
+		
 		if (debug) {
 			logger.log(Level.INFO, "Select on entity {0}, records found: {1} ",
 					new Object[] { baseDao.getEntityClass().getName(), dados.size() });

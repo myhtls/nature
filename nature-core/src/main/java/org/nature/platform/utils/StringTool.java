@@ -4,8 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+
 
 public class StringTool {
 	
@@ -137,7 +136,7 @@ public class StringTool {
 				novaString = matcher.group();
 			}
 		} catch (PatternSyntaxException ex) {
-			Logger.getLogger(StringTool.class.getName()).log(Level.WARN, ex.getMessage());
+		
 		}
 
 		return novaString;
