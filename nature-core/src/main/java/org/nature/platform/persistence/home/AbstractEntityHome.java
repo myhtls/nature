@@ -6,6 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
+import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 
 import org.nature.platform.enums.StatusCode;
@@ -26,18 +27,12 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 	private Class<T> entityClass;
 	private String url;
 	private long timeout = 5000;
-
 	private @Inject Conversation conversation;
-
+	
+	
 	protected abstract BaseDao<T, Serializable> getBaseDao();
 
-	/**
-	 * 初始化bean时调用此方法
-	 */
-	@PostConstruct
-	private void init() {
-		beginConversation();
-	}
+
 
 	/**
 	 * 销毁
@@ -50,9 +45,10 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 	/**
 	 * 启动对话
 	 */
-	private void beginConversation() {
+	protected void beginConversation() {
 		if (conversation.isTransient()) {
 			conversation.begin();
+			System.err.println("begin");
 			doPreInitData();
 		}
 		conversation.setTimeout(getTimeout());
@@ -73,6 +69,8 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 	 */
 	protected void doPreInitData() {
 	}
+
+	
 
 	/**
 	 * bean销毁之前要执行的操作
@@ -220,9 +218,8 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 		return entityClass;
 	}
 
-	public Conversation getConversation() {
-		return conversation;
-	}
+	
+
 
 	public long getTimeout() {
 		return timeout;

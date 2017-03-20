@@ -2,9 +2,9 @@ package org.nature.platform.enums;
 
 public enum SexEnum {
 	
-	MAN(1,"男"),
-	WOMAN(2,"女人"),
-	OTHER(3,"其他");
+	MAN(0,"男"),
+	WOMAN(1,"女"),
+	OTHER(2,"其他");
 	
 	private SexEnum(int value, String msg) {
         this.value = value;
