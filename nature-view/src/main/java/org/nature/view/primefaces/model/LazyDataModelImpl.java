@@ -205,7 +205,8 @@ public class LazyDataModelImpl<T> extends LazyDataModel {
 			setRowCount(0);
 			return null;
 		}
-
+		
+		
 		long begin = System.currentTimeMillis();
 
 		// 获得懒加载统计类型，如果是空将赋于默认的ALWAYS

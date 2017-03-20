@@ -26,7 +26,7 @@ public abstract class AbstractEntityHome<T, ID extends Serializable> implements 
 	private ID key;
 	private Class<T> entityClass;
 	private String url;
-	private long timeout = 5000;
+	private long timeout = 5000000;
 	private @Inject Conversation conversation;
 	
 	
