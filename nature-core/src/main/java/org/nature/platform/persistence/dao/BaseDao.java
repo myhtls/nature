@@ -198,6 +198,9 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		 * @return 受影响的实体
 		 */
 		public T update(T entity, String[] ignoreFields);
+		
+		public int updateByNamed(String named,String param,Object value);
+		public int updateByNamed(String named,Map<String, Object> paramMap);
 
 		/**
 		 * 通过受控待删除的实体对象执行物理删除
