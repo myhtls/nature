@@ -164,7 +164,7 @@ public class EntityUtils {
 	}
 
 	/**
-	 * 方法抬实体 id (field/method with annotation @Id or
+	 *  方法抬实体 id (field/method with annotation @Id or
 	 *
 	 * @EmbeddedId)
 	 *
@@ -201,6 +201,46 @@ public class EntityUtils {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String getIdFieldName(Object object) {
+		return getIdFieldName(object.getClass());
+	}
+
+	public static String getIdFieldName(Class clazz) {
+
+		String nameFromMap = ID_NAME_MAP.get(clazz);
+		if (nameFromMap != null) {
+			return nameFromMap;
+		}
+
+		AccessibleObject accessibleObject = getIdAccessibleObject(clazz);
+
+		if (accessibleObject instanceof Field) {
+			String name = ((Field) accessibleObject).getName();
+			ID_NAME_MAP.put(clazz, name);
+			return name;
+		}
+
+		if (accessibleObject instanceof Method) {
+			String name = ((Method) accessibleObject).getName();
+			String withoutGet = name.substring(3, name.length());
+			withoutGet = getLowerFirstLetter(withoutGet);
+			ID_NAME_MAP.put(clazz, withoutGet);
+			return withoutGet;
+		}
+
+		return null;
+	}
+
+	public static String getLowerFirstLetter(String string) {
+		if (string.length() == 1) {
+			return string.toLowerCase();
+		}
+		if (string.length() > 1) {
+			return string.substring(0, 1).toLowerCase() + "" + string.substring(1, string.length());
+		}
+		return "";
 	}
 
 }

@@ -261,5 +261,9 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		public void lock(LockModeType locketModeType);
 		
 		public Long countByNamed(String jpql,String param,Object value);
+		
+		 public Object findAttribute(String attributeName, ID id);
+
+		 public Object findAttribute(String attributeName, Object object);
 
 }

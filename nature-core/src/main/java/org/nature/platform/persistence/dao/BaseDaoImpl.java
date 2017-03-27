@@ -3,6 +3,7 @@ package org.nature.platform.persistence.dao;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.nature.platform.persistence.query.jpql.QueryBuilder;
+import org.nature.platform.persistence.utils.EntityUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -590,6 +591,20 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 		TypedQuery<Long> typeQuery = entityManager.createNamedQuery(jpql, Long.class);
 		typeQuery.setParameter(param, value);
 		return typeQuery.getResultList().get(0);
+	}
+
+	@Override
+	public Object findAttribute(String attributeName, ID id) {
+
+		QueryBuilder builder = getQueryBuilder();
+
+		return builder.select("o." + attributeName).from(getEntityClass(), "o")
+				.add("o." + EntityUtils.getIdFieldName(getEntityClass()), id).getSingleResult();
+	}
+
+	@Override
+	public Object findAttribute(String attributeName, Object object) {
+		return findAttribute(attributeName, (Number) EntityUtils.getId(object));
 	}
 
 }
