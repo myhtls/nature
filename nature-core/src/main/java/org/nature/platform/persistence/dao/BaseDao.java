@@ -265,5 +265,9 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		 public Object findAttribute(String attributeName, ID id);
 
 		 public Object findAttribute(String attributeName, Object object);
+		 
+		 public void evictById(ID id);
+		 
+		 public void evictById(Class<?> clases,ID id);
 
 }

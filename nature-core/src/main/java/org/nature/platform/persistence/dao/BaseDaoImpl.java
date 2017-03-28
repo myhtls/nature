@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.beans.PropertyDescriptor;
 import javax.inject.Inject;
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
@@ -605,6 +606,18 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	@Override
 	public Object findAttribute(String attributeName, Object object) {
 		return findAttribute(attributeName, (Number) EntityUtils.getId(object));
+	}
+
+	@Override
+	public void evictById(ID id) {
+		Cache cache = entityManager.getEntityManagerFactory().getCache();
+		cache.evict(getEntityClass(), id);
+	}
+
+	@Override
+	public void evictById(Class<?> clases, ID id) {
+		Cache cache = entityManager.getEntityManagerFactory().getCache();
+		cache.evict(getEntityClass(), id);
 	}
 
 }
