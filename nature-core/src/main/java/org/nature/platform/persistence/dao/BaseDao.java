@@ -200,6 +200,7 @@ public interface BaseDao <T, ID extends java.io.Serializable>{
 		public T update(T entity, String[] ignoreFields);
 		
 		public int updateByNamed(String named,String param,Object value);
+	
 		public int updateByNamed(String named,Map<String, Object> paramMap);
 
 		/**

@@ -239,6 +239,9 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 		return result.isEmpty() ? null : result.get(0);
 	}
 
+
+	
+	
 	/**
 	 * 通过命名查询并且多条件只返回唯一值
 	 */

@@ -4,17 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.nature.platform.utils.DateTool;
+import org.nature.platform.utils.UUIDGenerator;
 
 
 /**
@@ -32,8 +30,6 @@ public class SuperObject implements Serializable, Cloneable{
 
 	@Id
 	@Column(name = "Id")
-	@GeneratedValue(generator = "sequence_core_id" )
-	@GenericGenerator( name = "sequence_core_id", strategy = "org.nature.platform.persistence.id.PKGenerator" )
 	protected String id;
 	
 	@Version
@@ -157,7 +153,7 @@ public class SuperObject implements Serializable, Cloneable{
 	@PrePersist
 	private void prePersist() {
 		
-		
+		this.setId(UUIDGenerator.getUUID());
 		this.setDelete(false);
 		this.setEnable(1);
 		setCreatedDate(DateTool.now() );
