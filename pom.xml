@@ -337,6 +337,7 @@
 		<module>nature-view</module>
 		<module>nature-annotation</module>
 		<module>nature-entity</module>
+		<module>nature-security</module>
 	</modules>
 
 	<profiles>
